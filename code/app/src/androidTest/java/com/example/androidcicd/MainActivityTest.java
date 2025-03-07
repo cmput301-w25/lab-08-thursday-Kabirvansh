@@ -96,7 +96,6 @@ public class MainActivityTest {
 
         // Submit Form
         onView(withId(android.R.id.button1)).perform(click());
-
         // Check that an error is shown to the user
         onView(withId(R.id.edit_title)).check(matches(hasErrorText("Movie name cannot be empty!")));
     }
@@ -104,12 +103,21 @@ public class MainActivityTest {
     @Test
     public void appShouldDisplayExistingMoviesOnLaunch() {
         // Check that the initial data is loaded
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(withText("Oppenheimer")).check(matches(isDisplayed()));
         onView(withText("Barbie")).check(matches(isDisplayed()));
 
         // Click on Oppenheimer
         onView(withText("Oppenheimer")).perform(click());
-
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         // Check that the movie details are displayed correctly
         onView(withId(R.id.edit_title)).check(matches(withText("Oppenheimer")));
         onView(withId(R.id.edit_genre)).check(matches(withText("Thriller/Historical Drama")));
@@ -128,7 +136,7 @@ public class MainActivityTest {
 
     @After
     public void tearDown() {
-        String projectId = "YOUR-PROJECT-ID";
+        String projectId = "lab8-2af1f";
         URL url = null;
         try {
             url = new URL("http://10.0.2.2:8080/emulator/v1/projects/" + projectId + "/databases/(default)/documents");
