@@ -17,6 +17,9 @@ public class MovieProvider {
         movieCollection = firestore.collection("movies");
     }
 
+    public static void setInstanceForTesting(FirebaseFirestore mockFirestore) {
+    }
+
     public interface DataStatus {
         void onDataUpdated();
         void onError(String error);
