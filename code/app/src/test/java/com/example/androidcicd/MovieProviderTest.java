@@ -1,6 +1,8 @@
 package com.example.androidcicd;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.example.androidcicd.movie.Movie;
@@ -24,7 +26,7 @@ public class MovieProviderTest {
     @Mock
     private DocumentReference mockDocRef;
 
-    private MovieProvider movieProvider;
+    private static MovieProvider movieProvider;
 
     @Before
     public void setUp() {
@@ -38,7 +40,6 @@ public class MovieProviderTest {
         MovieProvider.setInstanceForTesting(mockFirestore);
         movieProvider = MovieProvider.getInstance(mockFirestore);
     }
-
     public static void setInstanceForTesting(FirebaseFirestore firestore) {
         movieProvider = new MovieProvider(firestore);
     }
@@ -72,7 +73,6 @@ public class MovieProviderTest {
         movieProvider.deleteMovie(movie);
         verify(mockDocRef).delete();
     }
-
     @Test(expected = IllegalArgumentException.class)
     public void testUpdateMovieShouldThrowErrorForDifferentIds() {
         Movie movie = new Movie("Oppenheimer", "Thriller/Historical Drama", 2023);
